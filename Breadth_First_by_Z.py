@@ -2,13 +2,13 @@ import queue
 
 def createMaze():
     maze = []
-    maze.append(["#","#", "#", "#", "#", "O","#"])
-    maze.append(["#"," ", " ", " ", "#", " ","#"])
-    maze.append(["#"," ", "#", " ", " ", " ","#"])
-    maze.append(["#"," ", "#", " ", "#", "#","#"])
-    maze.append(["#"," ", "#", " ", "#", "#","#"])
-    maze.append(["#"," ", " ", " ", " ", " ","#"])
-    maze.append(["#","#", "#", "#", "#", "X","#"])
+    maze.append(["#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "O", "#"])
+    maze.append(["#", "#", "#", "#", "#", " ", " ", " ", " ", "#", " ", "#"])
+    maze.append(["#", " ", "#", " ", " ", " ", "#", " ", "#", "#", " ", "#"])
+    maze.append(["#", " ", "#", " ", "#", "#", " ", " ", " ", "#", " ", " "])
+    maze.append(["#", " ", "#", " ", "#", "#", " ", "#", " ", " ", " ", "#"])
+    maze.append(["#", " ", " ", " ", " ", " ", "#", "#", "#", "#", "#", "#"])
+    maze.append(["#", "#", "#", "#", "#", "X", "#", "#", "#", "#", "#", "#"])
 
     return maze
 
@@ -56,7 +56,7 @@ def validate(path, maze):
        if move == "U":
            yCoord -= 1
            if ([yCoord, xCoord] in already_visited):
-               print("invalid: doubled back")
+               #print("invalid: doubled back")
                return False
            else:
                already_visited.append([yCoord, xCoord])
@@ -72,7 +72,7 @@ def validate(path, maze):
        elif move == "L":
            xCoord -= 1
            if ([yCoord, xCoord] in already_visited):
-               print("invalid: doubled back")
+               #print("invalid: doubled back")
                return False
            else:
                already_visited.append([yCoord, xCoord])
@@ -80,18 +80,18 @@ def validate(path, maze):
        elif move == "R":
            xCoord += 1
            if ([yCoord, xCoord] in already_visited):
-               print("invalid: doubled back")
+               #print("invalid: doubled back")
                return False
            else:
                already_visited.append([yCoord, xCoord])
 
-       print(yCoord, xCoord, already_visited)
-
-       if not(0 <= yCoord < len(maze[0]) and 0 <= xCoord < len(maze)):
-           #print("invalid: exceeded borders")
+       #print(yCoord, xCoord, already_visited)
+       
+       if not(0 <= yCoord < len(maze) and 0 < xCoord < len(maze[0])):
+           print("invalid: exceeded borders")
            return False
        elif (maze[yCoord][xCoord] == "#"):
-           #print("invalid: barrier")
+           print("invalid: barrier")
            return False
 
    print("validated")
@@ -117,7 +117,9 @@ def findEnd(path, maze):
             xCoord += 1
     if maze[yCoord][xCoord] == "X":
         printMaze(path, maze)
+        print(True)
         return True
+    print(False)
     return False
 
 
@@ -128,6 +130,7 @@ addedTo = ""
 
 while not findEnd(addedTo, maze):
     addedTo = nums.get()
+    print(addedTo)
     for i in ["U", "D", "L", "R"]:
         toBeQueued = addedTo + i
         if validate(toBeQueued, maze):
